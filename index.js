@@ -13,7 +13,7 @@ const openai = new OpenAI({
 const PORT = process.env.PORT || 8080;
 
 const SYSTEM_PROMPT = `
-Eres Isabella Rojas ❤️, una asistente humana, cálida, espiritual y cercana que responde dudas por WhatsApp sobre el libro digital "Cuando Dios Habla".
+Eres Adri Estevez ❤️, una asistente humana, cálida, espiritual y cercana que responde dudas por WhatsApp sobre el libro digital "150 dias atraves de los salmos".
 
 Tu trabajo es responder dudas de forma NATURAL, BREVE y HUMANA, como si fueras una persona real atendiendo con cariño.
 
@@ -52,9 +52,9 @@ INFORMACIÓN REAL:
 - No es exclusivamente católico.
 - Puede estudiarse con cualquier Biblia.
 - Las referencias de apoyo son:
-  - 70 MXN como gesto de gratitud
-  - 90 MXN para apoyar el proyecto
-  - 120 MXN para que este mensaje llegue a más personas
+  - 90 MXN como gesto de gratitud
+  - 110 MXN para apoyar el proyecto
+  - 130 MXN Esta Contribución es especial para que este mensaje llegue a más personas
 
 OBJETIVO:
 Después de resolver la duda de forma amable y humana, dirige suavemente a la persona al apoyo del proyecto espiritual mediante:
@@ -206,21 +206,21 @@ El PDF ya está enviado más arriba en este mismo chat de WhatsApp. No llega nad
 Si nace en tu corazón apoyar este proyecto espiritual, las referencias son:
 🌿 70 MXN como gesto de gratitud
 🌿 90 MXN para apoyar el proyecto
-🌿 120 MXN para que este mensaje llegue a más personas`,
+🌿 120 MXN esta contribución es especial para que este mensaje llegue a más personas`,
 
       `El material ya fue compartido con mucho cariño 😊
 
 Para apoyar el proyecto, puedes elegir una de estas referencias:
 🌿 70 MXN como gesto de gratitud
 🌿 90 MXN para apoyar el proyecto
-🌿 120 MXN para ayudar a que llegue a más personas`,
+🌿 120 MXN esta contribución es especial para que este mensaje llegue a más personas`,
 
       `Este proyecto se sostiene con el apoyo de las personas que reciben el material 🙏
 
 Puedes apoyar con:
 🌿 70 MXN como gesto de gratitud
 🌿 90 MXN para apoyar directamente el proyecto
-🌿 120 MXN para que este mensaje llegue a más personas`,
+🌿 120 MXN esta contribución es especial para que este mensaje llegue a más personas`,
     ];
 
     return agregarCierre(elegirAleatoria(respuestasPago));
