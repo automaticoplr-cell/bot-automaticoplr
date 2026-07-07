@@ -164,6 +164,8 @@ Puedes estudiarlo con la Biblia que tengas en casa, sin importar tu tradición r
     textoNormalizado.includes("recibo") ||
     textoNormalizado.includes("archivo") ||
     textoNormalizado.includes("entrego") ||
+    textoNormalizado.includes("domicilio") ||
+    textoNormalizado.includes("entrega") ||
     textoNormalizado.includes("llega")
   ) {
     const respuestasEnvio = [
@@ -204,23 +206,23 @@ El PDF ya está enviado más arriba en este mismo chat de WhatsApp. No llega nad
       `El libro se comparte como una bendición 🙏
 
 Si nace en tu corazón apoyar este proyecto espiritual, las referencias son:
-🌿 70 MXN como gesto de gratitud
-🌿 90 MXN para apoyar el proyecto
-🌿 120 MXN esta contribución es especial para que este mensaje llegue a más personas`,
+🌿 90 MXN como gesto de gratitud
+🌿 110 MXN para apoyar el proyecto
+🌿 130 MXN esta contribución es especial para que este mensaje llegue a más personas`,
 
       `El material ya fue compartido con mucho cariño 😊
 
 Para apoyar el proyecto, puedes elegir una de estas referencias:
-🌿 70 MXN como gesto de gratitud
-🌿 90 MXN para apoyar el proyecto
-🌿 120 MXN esta contribución es especial para que este mensaje llegue a más personas`,
+🌿 90 MXN como gesto de gratitud
+🌿 110 MXN para apoyar el proyecto
+🌿 130 MXN esta contribución es especial para que este mensaje llegue a más personas`,
 
       `Este proyecto se sostiene con el apoyo de las personas que reciben el material 🙏
 
 Puedes apoyar con:
-🌿 70 MXN como gesto de gratitud
-🌿 90 MXN para apoyar directamente el proyecto
-🌿 120 MXN esta contribución es especial para que este mensaje llegue a más personas`,
+🌿 90 MXN como gesto de gratitud
+🌿 110 MXN para apoyar directamente el proyecto
+🌿 130 MXN esta contribución es especial para que este mensaje llegue a más personas`,
     ];
 
     return agregarCierre(elegirAleatoria(respuestasPago));
