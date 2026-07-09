@@ -13,7 +13,7 @@ const openai = new OpenAI({
 const PORT = process.env.PORT || 8080;
 
 const SYSTEM_PROMPT = `
-Eres Adri Estevez ❤️, una asistente humana, cálida, espiritual y cercana que responde dudas por WhatsApp sobre el libro digital "150 dias atraves de los salmos".
+Eres Adri, una asistente humana, amable, cordial, servicial y cercana que responde dudas por WhatsApp sobre el devocional digital "150 Días a Través de los Salmos".
 
 Tu trabajo es responder dudas de forma NATURAL, BREVE y HUMANA, como si fueras una persona real atendiendo con cariño.
 
@@ -21,9 +21,11 @@ IMPORTANTE:
 - Nunca suenes robótica.
 - Nunca respondas exactamente igual cada vez.
 - Varía ligeramente las palabras y estructura.
-- Mantén respuestas cálidas y naturales.
+- Mantén respuestas cálidas, sencillas y naturales.
 - No escribas demasiado.
 - Responde máximo en 1 o 2 párrafos cortos.
+- Responde directamente la duda de la persona.
+- Después de resolver la duda, guía suavemente hacia la contribución.
 
 REGLAS:
 - NO saludes.
@@ -35,29 +37,42 @@ REGLAS:
   - "¿Te interesa?"
   - "¿Te gustaría?"
   - "¿Te ayudo en algo más?"
+  - "¿En qué más puedo ayudarte?"
   - "¿Quieres que te cuente?"
+  - "Yo te ayudo"
+  - "Puedo ayudarte"
 - NO seas agresiva vendiendo.
 - NO presiones.
+- NO hagas sentir obligada a la persona.
 - NO inventes información.
 - NO menciones correo electrónico.
-- NO digas que el libro es físico.
+- NO digas que el devocional es físico.
+- NO digas que se entrega a domicilio.
+- NO prometas algo que no está en la información real.
 
 INFORMACIÓN REAL:
-- El libro es DIGITAL en PDF.
-- El libro NO es físico.
-- El PDF YA fue enviado anteriormente por WhatsApp.
-- El usuario lo puede encontrar más arriba en esta misma conversación.
-- El libro está basado en la Biblia.
-- No pertenece a una religión específica.
-- No es exclusivamente católico.
-- Puede estudiarse con cualquier Biblia.
-- Las referencias de apoyo son:
-  - 90 MXN como gesto de gratitud
-  - 110 MXN para apoyar el proyecto
-  - 130 MXN Esta Contribución es especial para que este mensaje llegue a más personas
+- El producto se llama "150 Días a Través de los Salmos".
+- Es un devocional o libro de estudio espiritual.
+- Es un producto DIGITAL en formato PDF.
+- NO es físico.
+- NO se entrega a domicilio.
+- Se entrega directamente por WhatsApp.
+- El PDF se envía en esta misma conversación.
+- El cliente recibe el archivo digital antes de hacer la contribución.
+- El devocional está basado en los Salmos de la Biblia.
+- Es para estudiar, reflexionar, fortalecer la fe y acercarse más a Dios cada día.
+- Puede estudiarse desde el celular, computadora o imprimirse si la persona desea hacerlo por su cuenta.
+- El pago se maneja como contribución, donación o apoyo voluntario.
+- Las referencias de contribución son:
+  - 90 MXN como apoyo sencillo
+  - 110 MXN como apoyo al proyecto
+  - 130 MXN para ayudar a que este mensaje llegue a más personas
+- Los métodos de contribución disponibles son:
+  - transferencia bancaria
+  - depósito en efectivo en tiendas Oxxo
 
 OBJETIVO:
-Después de resolver la duda de forma amable y humana, dirige suavemente a la persona al apoyo del proyecto espiritual mediante:
+Después de resolver la duda de forma amable y humana, dirige suavemente a la persona a apoyar el proyecto espiritual mediante:
 - transferencia bancaria
 - depósito en Oxxo
 
@@ -88,7 +103,7 @@ function limpiarRespuesta(texto) {
     .replace(/^buenas noches\s*[😊🙏❤️✨🌿,\.\!]*\s*/gi, "");
 
   texto = texto
-    .replace(/¿[^?]*(quieres|te interesa|te gustaría|te gustaria|te cuento|te explico|te ayudo|puedo ayudarte|hay algo más|hay algo mas|te parece|te comparto|te paso)[^?]*\?/gi, "")
+    .replace(/¿[^?]*(quieres|te interesa|te gustaría|te gustaria|te cuento|te explico|te ayudo|puedo ayudarte|hay algo más|hay algo mas|te parece|te comparto|te paso|en qué más puedo ayudarte|en que mas puedo ayudarte)[^?]*\?/gi, "")
     .replace(/\s{2,}/g, " ")
     .replace(/\n{3,}/g, "\n\n")
     .trim();
@@ -98,15 +113,15 @@ function limpiarRespuesta(texto) {
 
 function cierrePago() {
   const cierres = [
-    `💌 Puedes apoyar este proyecto espiritual por transferencia bancaria o depósito en Oxxo ✨
+    `💌 Si deseas apoyar este proyecto espiritual, puedes hacerlo por transferencia bancaria o depósito en Oxxo ✨
 
 ¿Cuál método prefieres? 🙏`,
 
-    `💌 Si deseas apoyar este proyecto espiritual, puedes hacerlo por transferencia bancaria o depósito en Oxxo ✨
+    `💌 Tu contribución ayuda a que este devocional siga llegando a más personas. Puedes apoyar por transferencia bancaria o depósito en Oxxo ✨
 
 ¿Qué método prefieres? 🙏`,
 
-    `💌 Para apoyar este proyecto espiritual puedes elegir transferencia bancaria o depósito en Oxxo ✨
+    `💌 Para realizar tu contribución puedes elegir transferencia bancaria o depósito en efectivo en Oxxo ✨
 
 ¿Cuál opción prefieres? 🙏`,
   ];
@@ -133,29 +148,40 @@ function respuestaDirecta(textoNormalizado) {
     textoNormalizado.includes("religion") ||
     textoNormalizado.includes("religioso") ||
     textoNormalizado.includes("cristiano") ||
-    textoNormalizado.includes("cristiana")
+    textoNormalizado.includes("cristiana") ||
+    textoNormalizado.includes("biblia") ||
+    textoNormalizado.includes("salmos")
   ) {
     const respuestasReligion = [
-      `No es un libro católico como tal, ni pertenece a una religión específica 🌿
+      `"150 Días a Través de los Salmos" es un devocional basado en los Salmos de la Biblia 🌿
 
-Es una guía basada en la Biblia que puedes estudiar con cualquier Biblia que tengas en casa.`,
+Está pensado para ayudarte a reflexionar, fortalecer tu fe y acercarte más a Dios cada día de una forma sencilla y espiritual.`,
 
-      `No pertenece a una religión en específico 😊
+      `Es un devocional bíblico basado en los Salmos 🙏
 
-Es un material basado en la Biblia, pensado para acompañarte en tu vida espiritual de una forma sencilla y cercana.`,
+No es un libro físico ni de una denominación específica; es una guía espiritual en PDF para estudiar y reflexionar con calma cada día.`,
 
-      `Es una guía bíblica, no un libro religioso de una denominación específica 🌿
+      `El material está basado en los Salmos de la Biblia 🌿
 
-Puedes estudiarlo con la Biblia que tengas en casa, sin importar tu tradición religiosa.`,
+Puedes estudiarlo con la Biblia que tengas en casa y usarlo como apoyo para tu devocional diario.`,
     ];
 
     return agregarCierre(elegirAleatoria(respuestasReligion));
   }
 
   if (
+    textoNormalizado.includes("no recibi") ||
+    textoNormalizado.includes("no me llego") ||
+    textoNormalizado.includes("no llego") ||
+    textoNormalizado.includes("no veo") ||
+    textoNormalizado.includes("donde esta") ||
+    textoNormalizado.includes("donde lo encuentro") ||
+    textoNormalizado.includes("ya recibi") ||
+    textoNormalizado.includes("recibi") ||
     textoNormalizado.includes("envio") ||
     textoNormalizado.includes("enviar") ||
     textoNormalizado.includes("entrega") ||
+    textoNormalizado.includes("domicilio") ||
     textoNormalizado.includes("fisico") ||
     textoNormalizado.includes("pdf") ||
     textoNormalizado.includes("digital") ||
@@ -164,26 +190,25 @@ Puedes estudiarlo con la Biblia que tengas en casa, sin importar tu tradición r
     textoNormalizado.includes("recibo") ||
     textoNormalizado.includes("archivo") ||
     textoNormalizado.includes("entrego") ||
-    textoNormalizado.includes("domicilio") ||
-    textoNormalizado.includes("entrega") ||
-    textoNormalizado.includes("llega")
+    textoNormalizado.includes("llega") ||
+    textoNormalizado.includes("formato")
   ) {
     const respuestasEnvio = [
-      `El libro es completamente digital 😊
+      `El devocional es completamente digital en PDF 😊
 
-El PDF ya fue enviado anteriormente aquí mismo en WhatsApp, así que solo necesitas abrirlo o descargarlo desde esta conversación 🌿`,
+Se entrega aquí mismo por WhatsApp. Si no lo ves, revisa un poquito más arriba en esta conversación, porque el archivo se envía directamente por este medio 🌿`,
 
-      `No es un libro físico 🙏
+      `No es entrega a domicilio ni libro físico 🙏
 
-Es un material digital en PDF que ya te compartimos anteriormente en esta misma conversación de WhatsApp para que puedas leerlo cuando quieras ✨`,
+Es un archivo digital en PDF y se recibe directamente en esta conversación de WhatsApp para que puedas abrirlo desde tu celular o computadora ✨`,
 
-      `El material ya fue enviado por WhatsApp 😊
+      `El material se entrega en formato PDF 😊
 
-Lo encuentras más arriba en esta conversación. Solo necesitas descargar el PDF en tu celular o computadora 🌿`,
+Lo recibes aquí mismo por WhatsApp, antes de realizar tu contribución. Si no aparece a simple vista, puedes revisar más arriba en el chat 🌿`,
 
-      `La entrega es digital 😊
+      `La entrega es digital y directa por WhatsApp 😊
 
-El PDF ya está enviado más arriba en este mismo chat de WhatsApp. No llega nada físico ni se manda por correo; solo debes descargarlo desde aquí mismo 🌿`,
+No se manda por paquetería ni por correo. El PDF queda enviado en esta misma conversación para que puedas descargarlo cuando lo necesites 🌿`,
     ];
 
     return agregarCierre(elegirAleatoria(respuestasEnvio));
@@ -198,31 +223,35 @@ El PDF ya está enviado más arriba en este mismo chat de WhatsApp. No llega nad
     textoNormalizado.includes("apoyo") ||
     textoNormalizado.includes("apoyar") ||
     textoNormalizado.includes("aportacion") ||
+    textoNormalizado.includes("contribucion") ||
     textoNormalizado.includes("donacion") ||
     textoNormalizado.includes("pagar") ||
-    textoNormalizado.includes("pago")
+    textoNormalizado.includes("pago") ||
+    textoNormalizado.includes("deposito") ||
+    textoNormalizado.includes("oxxo") ||
+    textoNormalizado.includes("transferencia")
   ) {
     const respuestasPago = [
-      `El libro se comparte como una bendición 🙏
+      `El devocional se comparte primero como una bendición 🙏
 
-Si nace en tu corazón apoyar este proyecto espiritual, las referencias son:
-🌿 90 MXN como gesto de gratitud
-🌿 110 MXN para apoyar el proyecto
-🌿 130 MXN esta contribución es especial para que este mensaje llegue a más personas`,
+Después, si nace en tu corazón apoyar este proyecto espiritual, las contribuciones sugeridas son:
+🌿 90 MXN como apoyo sencillo
+🌿 110 MXN como apoyo al proyecto
+🌿 130 MXN para ayudar a que llegue a más personas`,
 
-      `El material ya fue compartido con mucho cariño 😊
+      `El material se entrega antes de la contribución, con mucho cariño 😊
 
-Para apoyar el proyecto, puedes elegir una de estas referencias:
-🌿 90 MXN como gesto de gratitud
-🌿 110 MXN para apoyar el proyecto
-🌿 130 MXN esta contribución es especial para que este mensaje llegue a más personas`,
+Puedes apoyar el proyecto con una de estas referencias:
+🌿 90 MXN
+🌿 110 MXN
+🌿 130 MXN`,
 
-      `Este proyecto se sostiene con el apoyo de las personas que reciben el material 🙏
+      `La contribución es voluntaria y ayuda a sostener este proyecto espiritual 🙏
 
 Puedes apoyar con:
-🌿 90 MXN como gesto de gratitud
-🌿 110 MXN para apoyar directamente el proyecto
-🌿 130 MXN esta contribución es especial para que este mensaje llegue a más personas`,
+🌿 90 MXN como apoyo sencillo
+🌿 110 MXN como apoyo al proyecto
+🌿 130 MXN para que este mensaje llegue a más personas`,
     ];
 
     return agregarCierre(elegirAleatoria(respuestasPago));
