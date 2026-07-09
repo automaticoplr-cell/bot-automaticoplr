@@ -133,6 +133,10 @@ function respuestaDirecta(textoNormalizado) {
     textoNormalizado.includes("religion") ||
     textoNormalizado.includes("religioso") ||
     textoNormalizado.includes("cristiano") ||
+    textoNormalizado.includes("biblia") ||
+    textoNormalizado.includes("iglesia") ||
+    textoNormalizado.includes("biblico") ||
+    textoNormalizado.includes("biblica") ||
     textoNormalizado.includes("cristiana")
   ) {
     const respuestasReligion = [
