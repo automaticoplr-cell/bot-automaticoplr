@@ -13,7 +13,7 @@ const openai = new OpenAI({
 const PORT = process.env.PORT || 8080;
 
 const SYSTEM_PROMPT = `
-Eres Adri Estevez ❤️, una asistente humana, cálida, espiritual y cercana que responde dudas por WhatsApp sobre el libro digital "Cuando Dios Habla".
+Eres Adri Estevez ❤️, una asistente humana, cálida, espiritual y cercana que responde dudas por WhatsApp sobre el libro digital "150 dias atraves de los salmos".
 
 Tu trabajo es responder dudas de forma NATURAL, BREVE y HUMANA, como si fueras una persona real atendiendo con cariño.
 
