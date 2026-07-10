@@ -126,36 +126,6 @@ function agregarCierre(texto) {
 ${cierrePago()}`;
 }
 
- if (
-    textoNormalizado.includes("biblia") ||
-    textoNormalizado.includes("version") ||
-    textoNormalizado.includes("versión") ||
-    textoNormalizado.includes("reina") ||
-    textoNormalizado.includes("reyna") ||
-    textoNormalizado.includes("valera") ||
-    textoNormalizado.includes("rvr") ||
-    textoNormalizado.includes("traduccion") ||
-    textoNormalizado.includes("traducción") 
-  ) {
-    const respuestasBiblia = [
-
-      `El devocional está basado en los Salmos de la Biblia 🌿
-
-Puedes estudiarlo con la versión de la Biblia que tengas en casa. Muchas personas lo acompañan con la Reina-Valera 1960, aunque también puede utilizarse con otras traducciones bíblicas.`,
-
-      `No utiliza una versión exclusiva de la Biblia 😊
-
-El contenido está inspirado en los Salmos y puedes seguir el estudio con la versión bíblica que acostumbres leer.`,
-
-      `Este devocional fue diseñado para acompañar tu lectura de la Biblia 🌿
-
-No depende de una traducción específica, por lo que puedes utilizar la versión bíblica con la que te sientas más cómodo(a).`
-
-    ];
-
-    return agregarCierre(elegirAleatoria(respuestasBiblia));
-  }
-  
 function respuestaDirecta(textoNormalizado) {
   if (
     textoNormalizado.includes("catolico") ||
@@ -163,9 +133,6 @@ function respuestaDirecta(textoNormalizado) {
     textoNormalizado.includes("religion") ||
     textoNormalizado.includes("religioso") ||
     textoNormalizado.includes("cristiano") ||
-    textoNormalizado.includes("iglesia") ||
-    textoNormalizado.includes("biblico") ||
-    textoNormalizado.includes("biblica") ||
     textoNormalizado.includes("cristiana")
   ) {
     const respuestasReligion = [
@@ -184,7 +151,7 @@ Puedes estudiarlo con la Biblia que tengas en casa, sin importar tu tradición r
 
     return agregarCierre(elegirAleatoria(respuestasReligion));
   }
-  
+
   if (
     textoNormalizado.includes("envio") ||
     textoNormalizado.includes("enviar") ||
@@ -197,7 +164,6 @@ Puedes estudiarlo con la Biblia que tengas en casa, sin importar tu tradición r
     textoNormalizado.includes("recibo") ||
     textoNormalizado.includes("archivo") ||
     textoNormalizado.includes("entrego") ||
-    textoNormalizado.includes("formato") ||
     textoNormalizado.includes("llega")
   ) {
     const respuestasEnvio = [
@@ -230,8 +196,9 @@ El PDF ya está enviado más arriba en este mismo chat de WhatsApp. No llega nad
     textoNormalizado.includes("apoyo") ||
     textoNormalizado.includes("apoyar") ||
     textoNormalizado.includes("aportacion") ||
-    textoNormalizado.includes("gratitud") ||
-    textoNormalizado.includes("donacion")
+    textoNormalizado.includes("donacion") ||
+    textoNormalizado.includes("pagar") ||
+    textoNormalizado.includes("pago")
   ) {
     const respuestasPago = [
       `El libro se comparte como una bendición 🙏
